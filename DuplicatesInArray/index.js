@@ -2,19 +2,17 @@
 // This algorithm runs in O(n) time because it only needs to loop through the array once. 
 
 function removeDuplicates(arr) {
-    let dups = [];
     let hashTable = []; // { 2: true, 1: true, ... }
 
     for (let char of arr) {
         if (hashTable[String(char)] === undefined) {
-            hashTable[String(char)] = true;
+            hashTable[String(char)] = 1;
         } else {
-            dups.push(char);
+            hashTable[String(char)]++;
         }
     }
 
-    // console.log(dups)
-    return dups;
+    return Object.keys(hashTable).filter(k => hashTable[k] === 1);
 }
 
 
