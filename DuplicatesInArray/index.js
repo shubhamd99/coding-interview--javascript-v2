@@ -1,8 +1,28 @@
 // Find all duplicates in an array in linear time (Solution 1)
 // This algorithm runs in O(n) time because it only needs to loop through the array once. 
 
+// Alpha Numeric Array (Fastest)
 function removeDuplicates(arr) {
-    let hashTable = []; // { 2: true, 1: true, ... }
+    return arr.filter((item, pos) => {
+        return arr.indexOf(item) !== pos;
+    })
+}
+
+// Alpha Numeric Array
+function* removeDuplicatesGenerators(a) {
+    let seen = new Set();
+
+    for (let x of a) {
+        if (!seen.has(x)) {
+            seen.add(x);
+            yield x;
+        }
+    }
+}
+
+// Alpha Numeric Array
+function removeDuplicates3(arr) {
+    let hashTable = {}; // { 2: true, 1: true, ... }
 
     for (let char of arr) {
         if (hashTable[String(char)] === undefined) {
@@ -12,9 +32,11 @@ function removeDuplicates(arr) {
         }
     }
 
-    return Object.keys(hashTable).filter(k => hashTable[k] === 1);
-}
+    const extractDuplicates = Object.keys(hashTable).filter(k => hashTable[k] !== 1);
+    const final = extractDuplicates.map(n => isNaN(n) ? n : Number(n)); // "2" -> 2,  "4" -> 4,  "a" -> "a"
 
+    return final;
+}
 
 // Solution 2
 Math.abs('-1');     // 1
@@ -28,7 +50,8 @@ Math.abs({});       // NaN
 Math.abs('string'); // NaN
 Math.abs();         // NaN
 
-function removeDuplicates2(arr) {
+// Numbers Only
+function removeDuplicates4(arr) {
     let dups = [];
 
     for (let i = 0; i < arr.length; i++) {
@@ -56,4 +79,4 @@ function removeDuplicates2(arr) {
     return dups;
 }
 
-module.exports = removeDuplicates;
+module.exports = {removeDuplicates, removeDuplicatesGenerators};
